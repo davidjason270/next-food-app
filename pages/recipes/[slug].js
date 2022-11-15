@@ -1,7 +1,7 @@
-import {sanityClient, urlFor, usePreviewSubscription} from "../../lib/sanity"
+import {sanityClient, urlFor, UsePreviewSubscription} from "../../lib/sanity"
 import {PortableText} from '@portabletext/react'
-import {useRouter} from 'next/router'
-import {useState} from "react"; 
+import {UseRouter} from 'next/router'
+import {UseState} from "react"; 
 const query = `*[_type=="recipe" && slug.current == $slug][0]{
     _id,
     name,
@@ -22,19 +22,19 @@ const query = `*[_type=="recipe" && slug.current == $slug][0]{
 
 export default function oneRecipe({data, preview}){
 
-    const router = useRouter();
+    const router = UseRouter();
 
     if(router.isFallback){
         return <div>Loading...</div>;
     }
 
-    const { data: recipe } = usePreviewSubscription(query, {
+    const { data: recipe } = UsePreviewSubscription(query, {
         params : {slug: data.recipe?.slug.current},
         initialData: data,
         enabled: preview,
     });
 
-    const [likes, setLikes] = useState(data?.recipe?.likes);
+    const [likes, setLikes] = UseState(data?.recipe?.likes);
     
     const addLike = async () => {
         const res = await fetch("/api/handle-like", {
@@ -56,7 +56,7 @@ export default function oneRecipe({data, preview}){
             <button onClick={addLike} className="like-button">{likes} ❤</button>
             <main className="content">
                 {recipe.mainImage && (
-                    <img
+                    <Image
                     src={urlFor(recipe.mainImage).url()}
                     className="w-10 h-10 rounded-full"
                     alt=""
