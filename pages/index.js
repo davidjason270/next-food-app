@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { sanityClient, SanityClient, urlFor } from '../lib/sanity'
+import { sanityClient, urlFor } from '../lib/sanity'
 
 
 const recipeQuery = `*[_type=="recipe"]{
@@ -32,7 +32,7 @@ export default function Home({recipes}) {
         {recipes?.length > 0 && recipes.map((recipe) => (
           <li key={recipe._id} className="recipe-card">
             <Link href={`/recipes/${recipe.slug.current}`}>
-              <Image src={urlFor(recipe.mainImage).url()} alt="" /> 
+              <img src={urlFor(recipe.mainImage).url()} alt="" /> 
               <span>{recipe.name}</span>
             </Link>
           </li>
